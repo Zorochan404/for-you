@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const searchSlice = createSlice({
   name: 'song',
   initialState: {
-    song:{},
+    song:null,
   },
   reducers: {
     setSong: (state, action) => {

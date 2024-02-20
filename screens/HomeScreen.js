@@ -25,7 +25,10 @@ const HomeScreen = () => {
     return (
         <SafeAreaView style={GlobalStyles.droidSafeArea}>
             <View style={{ flex: 1 }}>
-            <SearchBar/>
+                <TouchableOpacity >
+                <SearchBar/>
+                </TouchableOpacity>
+            
             <SearchedSong/>
 
             </View>

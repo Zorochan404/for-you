@@ -6,7 +6,7 @@ import GlobalStyles from '../GlobalStyles';
 import SearchBar from '../components/SearchBar';
 import SearchedSong from '../components/SearchedSong';
 
-const HomeScreen = () => {
+const SearchScreen = () => {
     const [searchText, setSearchText] = useState('');
 
     const navigation = useNavigation()
@@ -15,10 +15,10 @@ const HomeScreen = () => {
         <SafeAreaView style={GlobalStyles.droidSafeArea}>
             <View style={{ flex: 1 }}>
             <SearchBar/>
-            <SearchedSong />
+            <SearchedSong/>
             </View>
         </SafeAreaView>
     );
 };
 
-export default HomeScreen;
+export default SearchScreen;

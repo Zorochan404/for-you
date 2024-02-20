@@ -6,7 +6,7 @@ import { setSong } from '../features/searchSlice';
 import { useNavigation } from '@react-navigation/native';
 
 
-const SearchedSong = ({id, url, thumbnail, title, uploaderName, duration, uploaderUrl}) => {
+const SearchedSong = ({id, playlistId, thumbnail, title, uploaderName, duration, uploaderUrl}) => {
     const dispatch = useDispatch()
 
 
@@ -16,7 +16,8 @@ const SearchedSong = ({id, url, thumbnail, title, uploaderName, duration, upload
 
     const handleSong = () => {
         dispatch(setSong({
-            url,
+            id,
+            playlistId,
             title,
             thumbnail,
             uploaderName,

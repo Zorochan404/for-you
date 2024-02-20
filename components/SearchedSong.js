@@ -48,7 +48,6 @@ const SearchedSong = ({
             backgroundColor: "#d3d3d3",
             padding: 5,
             borderRadius: 10,
-            borderBottomColor: "black",
           }}
         >
           <Image
@@ -56,9 +55,9 @@ const SearchedSong = ({
             source={{ uri: thumbnail }}
           />
           <View style={{ flexDirection: "column", width: "70%" }}>
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent:"space-between" }}>
-              <Text style={{ fontSize: 15 }}>{title}</Text>
-              <Text style={{ marginLeft: 20 }}>{duration}</Text>
+            <View >
+              <Text style={{ fontSize: 15, fontWeight: "bold" }}>{title}</Text>
+              <Text style={{fontSize: 10}}>{duration}</Text>
             </View>
 
             <Text style={{ fontSize: 12 }}>{uploaderName}</Text>

@@ -27,7 +27,6 @@ const HomeScreen = () => {
             <View style={{ flex: 1 }}>
             <SearchBar/>
             <SearchedSong/>
-
             </View>
         </SafeAreaView>
     );

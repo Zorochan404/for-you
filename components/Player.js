@@ -18,6 +18,8 @@ const Player = () => {
     const [previousSongs, setPreviousSongs] = useState([]); // Track previously played songs
     const items = useSelector(selectSong);
     const dispatch = useDispatch()
+    const [searchResults, setSearchResults] = useState([]);
+
 
     const handleSongPlay = async () => {
         const url = `https://pipedapi.kavin.rocks/streams/${playNextSongUrl}`;
@@ -48,6 +50,47 @@ const Player = () => {
         setPosition(status.positionMillis);
         setDuration(status.durationMillis);
     };
+
+    const handleNextsong = async() => {
+        const url = `https://beatbump.io/api/v1/next.json?playlistId=${items.playlistId}&configType=MUSIC_VIDEO_TYPE_ATV`;
+        console.log(url);
+        await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'text/plain',
+                "Connection": "keep-alive",
+                "User-Agent": "MY-UA-STRING"
+            }
+        })
+        .then(res => res.json())
+        .then((apiResponse) => {
+            const formattedResults = apiResponse.results.map(item => ({
+                id: item.videoId,
+                playlistId: item.playlistId,
+                thumbnail: item.thumbnails[0].url,
+                title: item.title,
+                uploaderName: item.artistInfo.artist[0].text,
+                duration:  item.subtitle[item.subtitle.length - 1].text
+            }));
+            setSearchResults(formattedResults[0]);
+            console.log(formattedResults[0])
+            dispatch(setSong({
+                id: formattedResults[0].id,
+                playlistId: formattedResults[0].playlistId,
+                title:formattedResults[0].title,
+                thumbnail: formattedResults[0].thumbnail,
+                uploaderName: formattedResults[0].uploaderName,
+                uploaderUrl: formattedResults[0].uploaderUrl,
+                duration:formattedResults[0].duration,
+              }))
+             
+              navigation.navigate('song')
+    
+        })
+        .catch((error) => {
+            console.error('Error fetching search results:', error);
+        });
+    }
 
     const handlePause = async () => {
         if (sound) {
@@ -96,7 +139,7 @@ const Player = () => {
             />
 
             <Button title={isPlaying ? "Pause" : "Play"} onPress={handlePause} />
-            <Button title='next'  />
+            <Button title='next'  onPress={handleNextsong}/>
             {/* <Button title='previous' onPress={PlayPrevious} /> */}
         </View>
     );

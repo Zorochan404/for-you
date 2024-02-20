@@ -38,7 +38,7 @@ const SearchBar = () => {
             thumbnail: item.thumbnails[0].url,
             title: item.title,
             uploaderName: item.artistInfo.artist[0].text,
-            duration: item.subtitle[4].text
+            duration: item.subtitle[item.subtitle.length-1].text
         }));
         setSearchResults(formattedResults);
         console.log(formattedResults)

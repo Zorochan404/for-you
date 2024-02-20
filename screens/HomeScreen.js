@@ -30,7 +30,6 @@ const HomeScreen = () => {
                 </TouchableOpacity>
             
             <SearchedSong/>
-
             </View>
         </SafeAreaView>
     );

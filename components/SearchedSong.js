@@ -58,31 +58,41 @@ const SearchedSong = ({
 
   return (
     <View>
-      <TouchableOpacity onPress={handleSong}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginTop: 10,
-            backgroundColor: "#d3d3d3",
-            padding: 5,
-            borderRadius: 10,
-          }}
-        >
-          <Image
-            style={{ width: 70, height: 70, marginRight: 10, borderRadius: 10 }}
-            source={{ uri: thumbnail }}
-          />
-          <View style={{ flexDirection: "column", width: "70%" }}>
-            <View >
-              <Text style={{ fontSize: 15, fontWeight: "bold" }}>{title}</Text>
-              <Text style={{fontSize: 10}}>{duration}</Text>
-            </View>
+      {id == null ? (
+        ""
+      ) : (
+        <TouchableOpacity onPress={handleSong}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: 10,
+              backgroundColor: "#d3d3d3",
+              padding: 5,
+              borderRadius: 10,
+            }}
+          >
+            <Image
+              style={{
+                width: 70,
+                height: 70,
+                marginRight: 10,
+                borderRadius: 10,
+              }}
+              source={{ uri: thumbnail }}
+            />
+            <View style={{ flexDirection: "column", width: "70%" }}>
+              <View>
+                <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+                  {title}
+                </Text>
+              </View>
 
-            <Text style={{ fontSize: 12 }}>{uploaderName}</Text>
+              <Text style={{ fontSize: 12 }}>{uploaderName}</Text>
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

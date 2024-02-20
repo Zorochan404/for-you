@@ -62,7 +62,7 @@ const handleItemClick = (item) => {
 
 
   return (
-    <View>
+    <View style={{marginBottom: 50}}>
       <Text
         style={{
           textAlign: "center",
@@ -103,7 +103,7 @@ const handleItemClick = (item) => {
         </TouchableOpacity>
       </View>
       <ScrollView
-        contentContainerStyle={{ paddingBottom: 50, marginHorizontal: 15 }}
+        contentContainerStyle={{ paddingBottom: 50, marginHorizontal: 10 }}
       >
         {searchResults?.map((song) => (
           <SearchedSong

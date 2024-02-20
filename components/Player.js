@@ -20,7 +20,7 @@ const Player = () => {
     const dispatch = useDispatch()
 
     const handleSongPlay = async () => {
-        const url = `https://pipedapi.kavin.rocks/streams/${playNextSongUrl}&autoplay=true`;
+        const url = `https://pipedapi.kavin.rocks/streams/${playNextSongUrl}`;
         const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -40,22 +40,7 @@ const Player = () => {
 
     const navigation = useNavigation(); // Get the navigation object
 
-    const PlayNext = async () => {
-        const nextSong = songUrl.relatedStreams[0];
-        dispatch(setSong({
-            url: nextSong.url,
-            title: nextSong.title,
-            thumbnail: nextSong.thumbnail,
-            uploaderName: nextSong.uploaderName,
-            uploaderUrl: nextSong.uploaderUrl,
-            duration: nextSong.duration,
-        }));
-        if (sound) {
-            await sound.stopAsync();
-        }
-        navigation.navigate('song');
-    };
-
+    
 
 
     const onPlaybackStatusUpdate = (status) => {
@@ -81,8 +66,8 @@ const Player = () => {
     };
 
     useEffect(() => {
-        setPlayNextSongUrl(items.url.split('=')[1]);
-    }, [items.url]);
+        setPlayNextSongUrl(items.id);
+    }, [items.id]);
 
     useEffect(() => {
         handleSongPlay();
@@ -110,7 +95,7 @@ const Player = () => {
             />
 
             <Button title={isPlaying ? "Pause" : "Play"} onPress={handlePause} />
-            <Button title='next' onPress={PlayNext} />
+            <Button title='next'  />
             {/* <Button title='previous' onPress={PlayPrevious} /> */}
         </View>
     );

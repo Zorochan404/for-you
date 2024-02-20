@@ -31,14 +31,14 @@ const SearchBar = () => {
         .then((apiResponse) => {
             const formattedResults = apiResponse.results[0].contents.map(item => ({
                 id: item.videoId,
-                // url: `https://www.youtube.com/watch?v=${item.videoId}`,
+                playlistId: item.playlistId,
                 thumbnail: item.thumbnails[0].url,
                 title: item.title,
                 uploaderName: item.artistInfo.artist[0].text,
                 duration: item.subtitle[4].text
             }));
             setSearchResults(formattedResults);
-            console.log(searchResults)
+            
         })
         .catch((error) => {
             console.error('Error fetching search results:', error);
@@ -78,7 +78,7 @@ const SearchBar = () => {
                         <SearchedSong
                             key={song.id}
                             id={song.id}
-                            // url={song.id}
+                            playlistId={song.playlistId}
                             thumbnail={song.thumbnail}
                             title={song.title}
                             uploaderName={song.uploaderName}

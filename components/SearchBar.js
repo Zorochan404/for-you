@@ -41,6 +41,7 @@ const SearchBar = () => {
             duration: item.subtitle[4].text
         }));
         setSearchResults(formattedResults);
+        console.log(formattedResults)
         
     })
     .catch((error) => {
@@ -108,7 +109,7 @@ const handleItemClick = (item) => {
           <SearchedSong
             key={song.id}
             id={song.id}
-            // url={song.id}
+            playlistId={song.playlistId}
             thumbnail={song.thumbnail}
             title={song.title}
             uploaderName={song.uploaderName}

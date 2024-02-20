@@ -66,6 +66,7 @@ const Player = () => {
     };
 
     useEffect(() => {
+        console.log(items)
         setPlayNextSongUrl(items.id);
     }, [items.id]);
 

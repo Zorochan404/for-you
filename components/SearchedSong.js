@@ -1,20 +1,23 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { Image } from 'expo-image';
 import { useDispatch } from 'react-redux';
 import { setSong } from '../features/searchSlice';
 import { useNavigation } from '@react-navigation/native';
+import { setPlaylist } from '../features/playlistSlice';
 
 
 const SearchedSong = ({id, playlistId, thumbnail, title, uploaderName, duration, uploaderUrl}) => {
     const dispatch = useDispatch()
+    const [searchResults, setSearchResults] = useState()
 
 
 
     const navigation = useNavigation()
 
 
-    const handleSong = () => {
+    const handleSong = async() => {
+      console.log(playlistId, id)
         dispatch(setSong({
             id,
             playlistId,
@@ -24,8 +27,10 @@ const SearchedSong = ({id, playlistId, thumbnail, title, uploaderName, duration,
             uploaderUrl,
             duration,
           }))
+         
           navigation.navigate('song')
-    }
+
+  }
 
 
   return (

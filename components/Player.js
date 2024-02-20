@@ -22,7 +22,11 @@ const Player = () => {
 
 
     const handleSongPlay = async () => {
+        if (sound) {
+            await sound.stopAsync(); 
+        }
         const url = `https://pipedapi.kavin.rocks/streams/${playNextSongUrl}`;
+        console.log(url)
         const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -32,8 +36,9 @@ const Player = () => {
             }
         });
         const apiResponse = await response.json();
-        const audioStreamUrl = apiResponse.audioStreams[1].url;
+        
         setSongUrl(apiResponse); // Update this line to setSongUrl
+        const audioStreamUrl = apiResponse.audioStreams[1].url;
         const newSound = new Audio.Sound();
         await newSound.loadAsync({ uri: audioStreamUrl },{ shouldPlay: true, isLooping: false },);
         setSound(newSound);
@@ -49,48 +54,29 @@ const Player = () => {
         setIsPlaying(status.isPlaying);
         setPosition(status.positionMillis);
         setDuration(status.durationMillis);
+        if (!status.isPlaying && status.didJustFinish) {
+            handleNextsong();
+        }
     };
 
-    const handleNextsong = async() => {
-        const url = `https://beatbump.io/api/v1/next.json?playlistId=${items.playlistId}&configType=MUSIC_VIDEO_TYPE_ATV`;
-        console.log(url);
-        await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'text/plain',
-                "Connection": "keep-alive",
-                "User-Agent": "MY-UA-STRING"
-            }
-        })
-        .then(res => res.json())
-        .then((apiResponse) => {
-            const formattedResults = apiResponse.results.map(item => ({
-                id: item.videoId,
-                playlistId: item.playlistId,
-                thumbnail: item.thumbnails[0].url,
-                title: item.title,
-                uploaderName: item.artistInfo.artist[0].text,
-                duration:  item.subtitle[item.subtitle.length - 1].text
-            }));
-            setSearchResults(formattedResults[0]);
-            console.log(formattedResults[0])
-            dispatch(setSong({
-                id: formattedResults[0].id,
-                playlistId: formattedResults[0].playlistId,
-                title:formattedResults[0].title,
-                thumbnail: formattedResults[0].thumbnail,
-                uploaderName: formattedResults[0].uploaderName,
-                uploaderUrl: formattedResults[0].uploaderUrl,
-                duration:formattedResults[0].duration,
-              }))
-             
-              navigation.navigate('song')
-    
-        })
-        .catch((error) => {
-            console.error('Error fetching search results:', error);
-        });
-    }
+    const handleNextsong = async () => {
+        // Find the index of the current playing song in the items array
+        const currentIndex = items.findIndex(item => item.id === playNextSongUrl);
+        
+        // If the current playing song is not found in the items array, set the first song as the next song
+        const nextIndex = currentIndex === -1 ? 0 : currentIndex + 1;
+        
+        // Set the id of the next song to playNextSongUrl
+        setPlayNextSongUrl(items[nextIndex]?.id || '');
+        navigation.navigate("song");
+    };
+
+    const handlePreviousSong = async () => {
+        const currentIndex = items.findIndex(item => item.id === playNextSongUrl);
+        const prevIndex = currentIndex === -1 ? 0 : currentIndex - 1;
+        setPlayNextSongUrl(items[prevIndex]?.id || '');
+        navigation.navigate("song");
+    };
 
     const handlePause = async () => {
         if (sound) {
@@ -109,9 +95,15 @@ const Player = () => {
     };
 
     useEffect(() => {
-        console.log(items)
-        setPlayNextSongUrl(items.id);
-    }, [items.id]);
+        // Find the index of the current playing song in the items array
+        const currentIndex = items.findIndex(item => item.id === playNextSongUrl);
+        
+        // If the current playing song is not found in the items array, set the first song as the next song
+        const nextIndex = currentIndex === -1 ? 0 : currentIndex + 1;
+        
+        // Set the id of the next song to playNextSongUrl
+        setPlayNextSongUrl(items[nextIndex]?.id || '');
+    }, [items]);
 
     useEffect(() => {
         handleSongPlay();
@@ -140,7 +132,7 @@ const Player = () => {
 
             <Button title={isPlaying ? "Pause" : "Play"} onPress={handlePause} />
             <Button title='next'  onPress={handleNextsong}/>
-            {/* <Button title='previous' onPress={PlayPrevious} /> */}
+            <Button title='previous' onPress={handlePreviousSong} />
         </View>
     );
 };

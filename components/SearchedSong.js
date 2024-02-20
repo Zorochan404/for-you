@@ -21,18 +21,37 @@ const SearchedSong = ({
   const navigation = useNavigation();
 
   const handleSong = async () => {
-    console.log(playlistId, id);
-    dispatch(
-      setSong({
-        id,
-        playlistId,
-        title,
-        thumbnail,
-        uploaderName,
-        uploaderUrl,
-        duration,
-      })
-    );
+    const url = `https://beatbump.io/api/v1/next.json?videoId=${id}&playlistId=${playlistId}&configType=MUSIC_VIDEO_TYPE_ATV`;
+    console.log(url);
+    await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'text/plain',
+            "Connection": "keep-alive",
+            "User-Agent": "MY-UA-STRING"
+        }
+    })
+    .then(res => res.json())
+    .then((apiResponse) => {
+        const formattedResults = apiResponse.results.map(item => ({
+            id: item.videoId,
+            playlistId: item.playlistId,
+            thumbnail: item.thumbnails[0].url,
+            title: item.title,
+            uploaderName: item.artistInfo.artist[0].text,
+            duration: item.subtitle[item.subtitle.length-1].text
+        }));
+        setSearchResults(formattedResults);
+        console.log(formattedResults)
+        dispatch(
+          setSong(formattedResults)
+        );
+        
+    })
+    .catch((error) => {
+        console.error('Error fetching search results:', error);
+    });
+    
 
     navigation.navigate("song");
   };

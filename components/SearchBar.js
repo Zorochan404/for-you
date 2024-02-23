@@ -50,11 +50,6 @@ const SearchBar = () => {
 };
 
 
-
-
-
-
-
 const handleItemClick = (item) => {
     navigation.navigate('song', { songData: item })
     console.log('Clicked item:', item);

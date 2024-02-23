@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/HomeScreen";
+import SearchScreen from "./components/SearchBar";
 import SongScreen from "./screens/SongScreen";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -17,6 +18,13 @@ export default function App() {
           <Stack.Screen
             name="home"
             component={HomeScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="search"
+            component={SearchScreen}
             options={{
               headerShown: false,
             }}

@@ -80,7 +80,7 @@ const HomeScreen = () => {
             />
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=> navigation.navigate('Chat')}>
             <Text style={{ color: "#fff" }}>Create Room</Text>
           </TouchableOpacity>
         </View>

@@ -7,6 +7,9 @@ import SearchScreen from "./components/SearchBar";
 import SongScreen from "./screens/SongScreen";
 import { Provider } from "react-redux";
 import store from "./store";
+import Login from "./screens/LoginScreen";
+import ChatScreen from "./screens/ChatScreen";
+import MessagingScreen from "./screens/MessagingScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +18,11 @@ export default function App() {
     <NavigationContainer>
       <Provider store={store}>
         <Stack.Navigator>
+        <Stack.Screen
+                    name='Login'
+                    component={Login}
+                    options={{ headerShown: false }}
+                />
           <Stack.Screen
             name="home"
             component={HomeScreen}
@@ -36,6 +44,17 @@ export default function App() {
               headerShown: false,
             }}
           />
+
+
+                <Stack.Screen
+                    name='Chat'
+                    component={ChatScreen}
+                    options={{
+                        title: "Chats",
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen name='Messaging' component={MessagingScreen} />
         </Stack.Navigator>
       </Provider>
     </NavigationContainer>

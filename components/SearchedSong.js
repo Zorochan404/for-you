@@ -67,9 +67,9 @@ const SearchedSong = ({
               flexDirection: "row",
               alignItems: "center",
               marginTop: 10,
-              backgroundColor: "#d3d3d3",
+              // backgroundColor: "#d3d3d3",
               padding: 5,
-              borderRadius: 10,
+              // borderRadius: 10,
             }}
           >
             <Image
@@ -83,12 +83,12 @@ const SearchedSong = ({
             />
             <View style={{ flexDirection: "column", width: "70%" }}>
               <View>
-                <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+                <Text style={{ fontSize: 15, fontWeight: "bold", color: "#fff" }}>
                   {title}
                 </Text>
               </View>
 
-              <Text style={{ fontSize: 12 }}>{uploaderName}</Text>
+              <Text style={{ fontSize: 12, color: "#fff" }}>{uploaderName}</Text>
             </View>
           </View>
         </TouchableOpacity>

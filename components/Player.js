@@ -61,7 +61,7 @@ const Player = () => {
 
     const handleNextsong = async () => {
         // Find the index of the current playing song in the items array
-        const currentIndex = items.findIndex(item => item.id === playNextSongUrl);
+        const currentIndex = items?.findIndex(item => item.id === playNextSongUrl);
         
         // If the current playing song is not found in the items array, set the first song as the next song
         const nextIndex = currentIndex === -1 ? 0 : currentIndex + 1;
@@ -72,7 +72,7 @@ const Player = () => {
     };
 
     const handlePreviousSong = async () => {
-        const currentIndex = items.findIndex(item => item.id === playNextSongUrl);
+        const currentIndex = items?.findIndex(item => item.id === playNextSongUrl);
         const prevIndex = currentIndex === -1 ? 0 : currentIndex - 1;
         setPlayNextSongUrl(items[prevIndex]?.id || '');
         navigation.navigate("song");
@@ -96,7 +96,7 @@ const Player = () => {
 
     useEffect(() => {
         // Find the index of the current playing song in the items array
-        const currentIndex = items.findIndex(item => item.id === playNextSongUrl);
+        const currentIndex = items?.findIndex(item => item.id === playNextSongUrl);
         
         // If the current playing song is not found in the items array, set the first song as the next song
         const nextIndex = currentIndex === -1 ? 0 : currentIndex + 1;

@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import GlobalStyles from '../GlobalStyles';
 import SearchBar from '../components/SearchBar';
 import SearchedSong from '../components/SearchedSong';
+import PlayerIcon from '../components/PlayerIcon';
 
 
 
@@ -24,6 +25,7 @@ const HomeScreen = () => {
 
     return (
         <SafeAreaView style={GlobalStyles.droidSafeArea}>
+            {/* <PlayerIcon/> */}
             <View style={{ flex: 1 }}>
                 <TouchableOpacity >
                 <SearchBar/>

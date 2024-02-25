@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
+import { getVideoInfo } from 'react-native-ytdl';
 import {
   View,
   Text,
@@ -19,36 +20,51 @@ const SearchBar = () => {
   const [searchResults, setSearchResults] = useState([]);
   const navigation = useNavigation();
 
-  const handleSearch = async () => {
-    const url = `https://beatbump.io/api/v1/search.json?q=${searchText}&filter=songs`;
-    console.log(url);
-    await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "text/plain",
-        Connection: "keep-alive",
-        "User-Agent": "MY-UA-STRING",
-      },
-    })
-      .then((res) => res.json())
-      .then((apiResponse) => {
-        const formattedResults = apiResponse.results[0].contents.map(
-          (item) => ({
-            id: item.videoId,
-            playlistId: item.playlistId,
-            thumbnail: item.thumbnails[0].url,
-            title: item.title,
-            uploaderName: item.artistInfo.artist[0].text,
-            duration: item.subtitle[item.subtitle.length - 1].text,
-          })
-        );
-        setSearchResults(formattedResults);
-        console.log(formattedResults);
-      })
-      .catch((error) => {
-        console.error("Error fetching search results:", error);
-      });
-  };
+
+const videoUrl = 'https://www.youtube.com/watch?v=MFTdGQ5in0M';
+
+handleSearch(videoUrl)
+  .then((info) => {
+    console.log('Title:', info.title);
+    console.log('Description:', info.description);
+    console.log('Thumbnail URL:', info.thumbnail_url);
+  })
+  .catch((error) => {
+    console.error('Error fetching video info:', error);
+  });
+
+
+
+  // const handleSearch = async () => {
+  //   const url = `https://beatbump.io/api/v1/search.json?q=${searchText}&filter=songs`;
+  //   console.log(url);
+  //   await fetch(url, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "text/plain",
+  //       Connection: "keep-alive",
+  //       "User-Agent": "MY-UA-STRING",
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((apiResponse) => {
+  //       const formattedResults = apiResponse.results[0].contents.map(
+  //         (item) => ({
+  //           id: item.videoId,
+  //           playlistId: item.playlistId,
+  //           thumbnail: item.thumbnails[0].url,
+  //           title: item.title,
+  //           uploaderName: item.artistInfo.artist[0].text,
+  //           duration: item.subtitle[item.subtitle.length - 1].text,
+  //         })
+  //       );
+  //       setSearchResults(formattedResults);
+  //       console.log(formattedResults);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching search results:", error);
+  //     });
+  // };
 
   const handleItemClick = (item) => {
     navigation.navigate("song", { songData: item });

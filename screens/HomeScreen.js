@@ -15,7 +15,7 @@ import GlobalStyles from "../GlobalStyles";
 import SearchBar from "../components/SearchBar";
 import SearchedSong from "../components/SearchedSong";
 import PlayerIcon from "../components/PlayerIcon";
-import Ionicons from "react-native-vector-icons/Ionicons";
+// import Ionicons from "react-native-vector-icons/Ionicons";
 
 const HomeScreen = () => {
   const [searchText, setSearchText] = useState("");
@@ -37,10 +37,10 @@ const HomeScreen = () => {
           }}
         >
           <TouchableOpacity onPress={() => navigation.navigate("search")}>
-            <Ionicons
+            {/* <Ionicons
               name="search-outline"
               style={{ color: "white", fontSize: 30 }}
-            />
+            /> */}
           </TouchableOpacity>
 
           <TouchableOpacity onPress={()=> navigation.navigate('Chat')}>

@@ -73,15 +73,7 @@ handleSearch(videoUrl)
 
   return (
     <SafeAreaView style={GlobalStyles.droidSafeArea}>
-      <View style={{ marginBottom: 50 }}>
-        <Text
-          style={{
-            textAlign: "center",
-            fontSize: 20,
-          }}
-        >
-          ForU
-        </Text>
+      <View style={{ flex: 1 }}>
         <View
           style={{
             display: "flex",

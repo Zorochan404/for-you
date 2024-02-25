@@ -1,10 +1,9 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform } from "react-native";
 export default StyleSheet.create({
-    droidSafeArea: {
-        flex: 1,
-        // backgroundColor: 'white',
-        paddingTop: Platform.OS === 'android' ? 0 : 0
-    },
+  droidSafeArea: {
+    flex: 1,
+    backgroundColor: "black",
+    color: "white",
+    paddingTop: Platform.OS === "android" ? 0 : 0,
+  },
 });
-
-

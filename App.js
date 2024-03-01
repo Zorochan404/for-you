@@ -7,10 +7,7 @@ import SearchScreen from "./components/SearchBar";
 import SongScreen from "./screens/SongScreen";
 import { Provider } from "react-redux";
 import store from "./store";
-import Login from "./screens/LoginScreen";
-import ChatScreen from "./screens/ChatScreen";
-import MessagingScreen from "./screens/MessagingScreen";
-import Signup from "./screens/SignupScreen";
+
 
 const Stack = createNativeStackNavigator();
 

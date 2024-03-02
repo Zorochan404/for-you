@@ -9,21 +9,45 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import GlobalStyles from "../GlobalStyles";
-
 import HomeCard from "../components/HomeCard";
 // import Ionicons from "react-native-vector-icons/Ionicons";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [Contents, setContents] = useState([]);
   const [continuation, setContinuation] = useState([]);
+  const [token, setToken] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+
+
+
+
+  const handleLogout = async () => {
+    try {
+      const value = await AsyncStorage.removeItem('token');
+      setToken(value)
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  }
+
+  
 
   const handleSearch = async () => {
-
+    const value = await AsyncStorage.getItem('token');
+    setToken(value);
+    
+    const at = value ? `Bearer ${value}` : 'Bearer ';
+    
     try {
+      
       const response = await fetch('https://music.youtube.com/youtubei/v1/browse?alt=json&key=AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30', {
         method: 'POST',
         headers: {
@@ -35,7 +59,7 @@ const HomeScreen = () => {
           'origin': 'https://music.youtube.com',
           'cookie': 'CONSENT=YES+1',
           'X-Goog-Visitor-Id': 'CgthcFMwMnltQ3VDMCjns_6uBjIKCgJJThIEGgAgRg%3D%3D',
-          'Authorization': 'Bearer ya29.a0AfB_byBzvpiupHC-ghv_nOU7SvzdXKmIEGls9wi3SL8f-KprhvNEUB4NgLJQTB--oZ3y68pAFxjarbCxBiDiGUcpn8dN_pphb_HgXDRaUt6dRQKO68_M1im34fwZOdxYhR9KnV-hbCFT2msW0_plgZXF1sO0D35uFAWB56AtUhTqHXi2aCgYKAccSARASFQHGX2Mib5hf1xJZyZaHxYabFik8Qg0183'
+          'Authorization': at 
       },
         body: JSON.stringify({
           context: {
@@ -62,7 +86,7 @@ const HomeScreen = () => {
           'origin': 'https://music.youtube.com',
           'cookie': 'CONSENT=YES+1',
           'X-Goog-Visitor-Id': 'CgthcFMwMnltQ3VDMCjns_6uBjIKCgJJThIEGgAgRg%3D%3D',
-          'Authorization': 'Bearer ya29.a0AfB_byBzvpiupHC-ghv_nOU7SvzdXKmIEGls9wi3SL8f-KprhvNEUB4NgLJQTB--oZ3y68pAFxjarbCxBiDiGUcpn8dN_pphb_HgXDRaUt6dRQKO68_M1im34fwZOdxYhR9KnV-hbCFT2msW0_plgZXF1sO0D35uFAWB56AtUhTqHXi2aCgYKAccSARASFQHGX2Mib5hf1xJZyZaHxYabFik8Qg0183'
+          'Authorization': at
       },
         body: JSON.stringify({
           context: {
@@ -99,12 +123,21 @@ const HomeScreen = () => {
 
     } catch (error) {
       console.error('Error:', error);
+    }finally {
+      setRefreshing(false);
     }
   }
 
   useEffect(()=>{
     handleSearch()
-  },[])
+  },[token])
+
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    handleSearch();
+  }
+
 
 
 
@@ -123,9 +156,27 @@ const HomeScreen = () => {
           For U
         </Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={handleLogout}>
+        <Text
+          style={{
+            textAlign: "center",
+            fontSize: 30,
+            color: "#fff",
+          }}
+        >
+          Logout
+        </Text>
+          </TouchableOpacity>
       
         {/* <SearchBar /> */}
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
+        >
         <View
           style={{
             display: "flex",

@@ -7,6 +7,7 @@ import SearchScreen from "./components/SearchBar";
 import SongScreen from "./screens/SongScreen";
 import { Provider } from "react-redux";
 import store from "./store";
+import SigninScreen from "./screens/SigninScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -40,6 +41,13 @@ export default function App() {
           <Stack.Screen
             name="song"
             component={SongScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+           <Stack.Screen
+            name="signin"
+            component={SigninScreen}
             options={{
               headerShown: false,
             }}
